@@ -11,11 +11,64 @@
 - 健康检查接口
 - 错误处理和日志记录
 
+**注意：** 由于数据集为英文，请使用英文进行搜索查询。
+
 ## 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
+
+## 创建索引
+
+如果你有 `photos.csv000` 数据文件，可以按照以下步骤创建搜索索引：
+
+### 获取数据文件
+
+`photos.csv000` 数据文件可以从 [Unsplash Dataset](https://unsplash.com/data) 下载：
+
+1. 访问 [Unsplash Dataset 页面](https://unsplash.com/data)
+2. 选择 **Lite** 版本（免费，包含25,000张图片）或 **Full** 版本（需要联系团队获取访问权限，包含480万+张图片）
+3. 下载数据集，其中包含 `photos.csv000` 文件
+
+### 1. 准备数据
+
+首先运行数据预处理脚本，将原始数据转换为标准格式：
+
+```bash
+python prepare_data.py
+```
+
+这个脚本会：
+- 读取 `photos.csv000` 文件
+- 提取图片描述、ID、URL等信息
+- 清理空描述数据
+- 生成 `data.csv` 文件
+
+### 2. 构建索引
+
+然后运行索引构建脚本，创建FAISS向量索引：
+
+```bash
+python build_index.py
+```
+
+这个脚本会：
+- 使用 Sentence Transformers 模型生成文本嵌入向量
+- 构建FAISS索引用于快速相似度搜索
+- 生成以下文件：
+  - `index.faiss` - FAISS索引文件
+  - `data_indexed.csv` - 索引后的图片数据
+  - `embeddings.npy` - 图片描述嵌入向量
+
+### 数据文件格式要求
+
+`photos.csv000` 文件应包含以下列（用制表符分隔）：
+- `photo_id` - 图片ID
+- `ai_description` 或 `photo_description` - 图片描述
+- `photo_image_url` - 图片URL
+- `photo_width` - 图片宽度
+- `photo_height` - 图片高度
 
 ## 启动服务
 
@@ -58,7 +111,7 @@ python app.py
 **请求体：**
 ```json
 {
-  "query": "一只可爱的小猫",
+  "query": "a cute cat",
   "k": 5
 }
 ```
@@ -70,13 +123,13 @@ python app.py
 **响应示例：**
 ```json
 {
-  "query": "一只可爱的小猫",
+  "query": "a cute cat",
   "total_results": 5,
   "results": [
     {
       "rank": 1,
       "image_id": "12345",
-      "description": "一只橘色的小猫坐在窗台上",
+      "description": "An orange cat sitting on the windowsill",
       "similarity_score": 0.85,
       "photo_url": "https://example.com/image1.jpg",
       "width": 800,
@@ -107,10 +160,10 @@ curl http://localhost:5000/health
 # POST搜索
 curl -X POST http://localhost:5000/search \
   -H "Content-Type: application/json" \
-  -d '{"query": "一只可爱的小猫", "k": 3}'
+  -d '{"query": "a cute cat", "k": 3}'
 
 # GET搜索
-curl "http://localhost:5000/search?q=一只可爱的小猫&k=3"
+curl "http://localhost:5000/search?q=a+cute+cat&k=3"
 ```
 
 ### 使用Python requests
@@ -120,16 +173,16 @@ import requests
 
 # 搜索图片
 response = requests.post('http://localhost:5000/search', 
-                        json={'query': '一只可爱的小猫', 'k': 5})
+                        json={'query': 'a cute cat', 'k': 5})
 
 if response.status_code == 200:
     results = response.json()
     for result in results['results']:
-        print(f"排名: {result['rank']}")
-        print(f"图片ID: {result['image_id']}")
-        print(f"描述: {result['description']}")
-        print(f"相似度: {result['similarity_score']:.2f}")
-        print(f"图片URL: {result['photo_url']}")
+        print(f"Rank: {result['rank']}")
+        print(f"Image ID: {result['image_id']}")
+        print(f"Description: {result['description']}")
+        print(f"Similarity: {result['similarity_score']:.2f}")
+        print(f"Photo URL: {result['photo_url']}")
         print("---")
 ```
 
