@@ -1,0 +1,30 @@
+# Git相关
+.git
+.gitignore
+
+# Python相关
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+
+# 数据文件（如果太大，可以考虑不包含）
+# photos.csv000
+
+# 其他
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# 测试文件
+test_*.py
+example_usage.py
+search_cli.py
+prepare_data.py
+build_index.py
+start_server.sh 

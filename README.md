@@ -72,6 +72,8 @@ python build_index.py
 
 ## 启动服务
 
+### 方法一：直接运行（开发环境）
+
 确保以下文件存在于项目目录中：
 - `index.faiss` - FAISS索引文件
 - `data_indexed.csv` - 图片数据文件
@@ -84,6 +86,59 @@ python app.py
 ```
 
 服务将在 `http://localhost:5000` 启动。
+
+### 方法二：使用启动脚本
+
+```bash
+chmod +x start_server.sh
+./start_server.sh
+```
+
+### 方法三：Docker容器运行（推荐生产环境）
+
+#### 构建Docker镜像
+
+```bash
+chmod +x docker-build.sh
+./docker-build.sh
+```
+
+#### 运行容器
+
+**使用docker run命令：**
+```bash
+docker run -d -p 5000:5000 --name image-search-container image-search:latest
+```
+
+**使用docker-compose（推荐）：**
+```bash
+docker-compose up -d
+```
+
+#### 容器管理
+
+```bash
+# 查看容器状态
+docker ps
+
+# 查看容器日志
+docker logs image-search-container
+
+# 停止容器
+docker stop image-search-container
+
+# 重启容器
+docker restart image-search-container
+
+# 删除容器
+docker rm image-search-container
+```
+
+**Docker容器特性：**
+- 自动启动HTTP服务
+- 健康检查机制
+- 容器重启时自动恢复服务
+- 端口映射：容器内5000端口映射到主机5000端口
 
 ## API接口
 
