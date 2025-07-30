@@ -25,11 +25,11 @@ def load_model_and_data():
     
     try:
         logger.info("正在加载FAISS索引...")
-        index = faiss.read_index("index.faiss")
+        index = faiss.read_index("data/index.faiss")
         
         logger.info("正在加载数据...")
-        df = pd.read_csv("data_indexed.csv")
-        embeddings = np.load("embeddings.npy")
+        df = pd.read_csv("data/data_indexed.csv")
+        embeddings = np.load("data/embeddings.npy")
         image_ids = df['image_id'].tolist()
         descriptions = df['description'].tolist()
         

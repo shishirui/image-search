@@ -4,9 +4,9 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 
 # 加载索引和数据
-index = faiss.read_index("index.faiss")
-df = pd.read_csv("data_indexed.csv")
-embeddings = np.load("embeddings.npy")
+index = faiss.read_index("data/index.faiss")
+df = pd.read_csv("data/data_indexed.csv")
+embeddings = np.load("data/embeddings.npy")
 image_ids = df['image_id'].tolist()
 descriptions = df['description'].tolist()
 

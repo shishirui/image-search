@@ -1,6 +1,39 @@
-# 图片搜索HTTP API服务
+# 图片搜索项目
 
-这是一个基于Flask的图片搜索HTTP API服务，使用FAISS向量索引和Sentence Transformers进行语义搜索。
+这是一个基于语义搜索的图片搜索系统，使用FAISS向量索引和Sentence Transformers模型。
+
+## 项目结构
+
+```
+image-search/
+├── src/                    # 源代码文件
+│   ├── app.py             # Flask Web应用主文件
+│   ├── example_usage.py   # 使用示例
+│   ├── test_api.py        # API测试文件
+│   ├── search_cli.py      # 命令行搜索工具
+│   ├── prepare_data.py    # 数据预处理脚本
+│   └── build_index.py     # 构建FAISS索引脚本
+├── scripts/               # 脚本文件
+│   ├── start_server.sh    # 启动服务器脚本
+│   ├── docker-build.sh    # Docker构建脚本
+│   ├── docker-entrypoint.sh # Docker入口点脚本
+│   └── test-docker.sh     # Docker测试脚本
+├── config/                # 配置文件
+│   ├── requirements.txt   # Python依赖
+│   ├── Dockerfile         # Docker配置
+│   └── docker-compose.yml # Docker Compose配置
+├── data/                  # 数据文件
+│   ├── photos.csv000      # 原始图片数据
+│   ├── data.csv           # 处理后的数据
+│   ├── data_indexed.csv   # 索引数据
+│   ├── index.faiss        # FAISS索引文件
+│   └── embeddings.npy     # 向量嵌入文件
+├── docs/                  # 文档
+│   └── README.md          # 详细文档
+├── venv/                  # Python虚拟环境
+├── .gitignore            # Git忽略文件
+└── .dockerignore         # Docker忽略文件
+```
 
 ## 功能特性
 

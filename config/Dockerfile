@@ -11,19 +11,19 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
-COPY requirements.txt .
+COPY config/requirements.txt .
 
 # 安装Python依赖
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制应用代码和数据文件
-COPY app.py .
-COPY index.faiss .
-COPY data_indexed.csv .
-COPY embeddings.npy .
+COPY src/app.py .
+COPY data/index.faiss .
+COPY data/data_indexed.csv .
+COPY data/embeddings.npy .
 
 # 创建启动脚本
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY scripts/docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # 暴露端口

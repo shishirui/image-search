@@ -12,7 +12,7 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 # 检查必要文件是否存在
-required_files=("index.faiss" "data_indexed.csv" "embeddings.npy")
+required_files=("data/index.faiss" "data/data_indexed.csv" "data/embeddings.npy")
 for file in "${required_files[@]}"; do
     if [ ! -f "$file" ]; then
         echo "错误: 缺少必要文件 $file"
@@ -34,11 +34,11 @@ echo "激活虚拟环境..."
 source venv/bin/activate
 
 echo "安装依赖包..."
-pip install -r requirements.txt
+pip install -r config/requirements.txt
 
 echo "启动Flask服务..."
 echo "服务将在 http://localhost:5000 启动"
 echo "按 Ctrl+C 停止服务"
 echo ""
 
-python app.py 
+python src/app.py 

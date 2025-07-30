@@ -2,7 +2,7 @@ import pandas as pd
 
 # 读取原始数据文件
 print("正在读取 photos.csv000...")
-df = pd.read_csv("photos.csv000", sep='\t')
+df = pd.read_csv("data/photos.csv000", sep='\t')
 
 print(f"原始数据包含 {len(df)} 行")
 
@@ -26,8 +26,8 @@ result_df = result_df[result_df['description'].str.strip() != '']
 print(f"处理后数据包含 {len(result_df)} 行")
 
 # 保存为 data.csv
-result_df.to_csv("data.csv", index=False)
-print("数据已保存为 data.csv")
+result_df.to_csv("data/data.csv", index=False)
+print("数据已保存为 data/data.csv")
 
 # 显示前几行作为示例
 print("\n前5行数据示例：")
