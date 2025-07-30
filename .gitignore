@@ -170,10 +170,7 @@ cython_debug/
 
 # 项目特定的忽略文件
 # 数据文件
-*.csv
-*.npy
 *.npz
-*.faiss
 *.pkl
 *.pickle
 *.h5
